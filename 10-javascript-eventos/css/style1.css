@@ -1,28 +1,40 @@
 .container {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  #contador {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  button {
-    background-color: #4CAF50; /* Verde */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 50px; /* Torna os botões redondos */
-  }
-  
-  button:hover {
-    background-color: #45a049; /* Verde mais escuro quando passa o mouse */
-  }
-  
+  text-align: center;
+  margin-top: 50px;
+  font-family: 'Arial', sans-serif; 
+  color: #333; 
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  background: #f9f9f9; 
+}
+
+#contador {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #4e4caf; 
+}
+
+button {
+  background: linear-gradient(145deg, #4ca0af, #386a8e); 
+  border: 1px solid #fff;
+  color: white;
+  padding: 15px 32px;
+  font-size: 18px; 
+  margin: 5px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+button:active {
+  transform: scale(0.95);
+}

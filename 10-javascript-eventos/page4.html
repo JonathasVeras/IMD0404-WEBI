@@ -18,11 +18,140 @@
         <label for="data">Data:</label>
         <input type="date" id="data" required>
       </div>
-      <button type="submit">Adicionar Tarefa</button>
+      <div>
+        <label for="comentario">Comentário:</label>
+        <input type="text" id="comentario">
+      </div>
+      <div>
+        <label for="prioridade">Prioridade:</label>
+        <select id="prioridade" required>
+          <option value="">Selecione...</option>
+          <option value="alta">Alta</option>
+          <option value="media">Média</option>
+          <option value="baixa">Baixa</option>
+        </select>
+      </div>
+      <div>
+        <label for="notificacao">Notificação:</label>
+        <select id="notificacao" required>
+          <option value="">Selecione...</option>
+          <option value="sim">Sim</option>
+          <option value="nao">Não</option>
+        </select>
+      </div>
+      <div>
+        <label for="dataCriacao">Data de Criação:</label>
+        <input type="text" id="dataCriacao" readonly>
+      </div>
+      <div class="botoes">
+        <button type="submit">Adicionar Tarefa</button>
+        <button type="button" id="btnCancelar">Cancelar</button>
+      </div>
     </form>
-    <ul id="listaTarefas"></ul>
+    <div id="tarefas">
+      <p id="nenhumaTarefa">Não há tarefas cadastradas</p>
+    </div>
   </div>
 
-  <script src="js/script4.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const formTarefa = document.getElementById("formTarefa");
+      const dataCriacaoInput = document.getElementById("dataCriacao");
+      const btnCancelar = document.getElementById("btnCancelar");
+      const listaTarefas = document.getElementById("tarefas");
+      const nenhumaTarefaMsg = document.getElementById("nenhumaTarefa");
+
+      formTarefa.addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        const descricao = document.getElementById("descricao").value;
+        const data = document.getElementById("data").value;
+        const comentario = document.getElementById("comentario").value;
+        const prioridade = document.getElementById("prioridade").value;
+        const notificacao = document.getElementById("notificacao").value;
+
+        const dataCriacao = new Date().toLocaleString();
+        dataCriacaoInput.value = dataCriacao;
+
+        console.log("Descrição:", descricao);
+        console.log("Data:", data);
+        console.log("Comentário:", comentario);
+        console.log("Prioridade:", prioridade);
+        console.log("Notificação:", notificacao);
+        console.log("Data de Criação:", dataCriacao);
+
+        formTarefa.reset();
+      });
+
+      btnCancelar.addEventListener("click", function() {
+        formTarefa.reset();
+      });
+
+      function adicionarTarefa(descricao, data, comentario, prioridade, notificacao, dataCriacao) {
+        const tarefa = document.createElement("div");
+        tarefa.classList.add("tarefa");
+
+        const header = document.createElement("div");
+        header.classList.add("tarefa-header");
+
+        const info = document.createElement("div");
+        info.classList.add("tarefa-info");
+
+        const descricaoElement = document.createElement("p");
+        descricaoElement.textContent = "Descrição: " + descricao;
+        info.appendChild(descricaoElement);
+
+        const dataElement = document.createElement("p");
+        dataElement.textContent = "Data: " + data;
+        info.appendChild(dataElement);
+
+        const prioridadeElement = document.createElement("p");
+        prioridadeElement.textContent = "Prioridade: " + prioridade;
+        info.appendChild(prioridadeElement);
+
+        const btnExpandir = document.createElement("button");
+        btnExpandir.textContent = "Expandir";
+        btnExpandir.classList.add("btn-expandir");
+        btnExpandir.addEventListener("click", function() {
+          if (info.style.display === "none") {
+            info.style.display = "block";
+          } else {
+            info.style.display = "none";
+          }
+        });
+
+        const btnRemover = document.createElement("button");
+        btnRemover.textContent = "Remover";
+        btnRemover.addEventListener("click", function() {
+          tarefa.remove();
+          if (listaTarefas.children.length === 0) {
+            nenhumaTarefaMsg.style.display = "block";
+          }
+        });
+
+        const btnEditar = document.createElement("button");
+        btnEditar.textContent = "Editar";
+        btnEditar.addEventListener("click", function() {
+          document.getElementById("descricao").value = descricao;
+          document.getElementById("data").value = data;
+          document.getElementById("comentario").value = comentario;
+          document.getElementById("prioridade").value = prioridade;
+          document.getElementById("notificacao").value = notificacao;
+        });
+
+        header.appendChild(btnExpandir);
+        header.appendChild(btnRemover);
+        header.appendChild(btnEditar);
+
+        tarefa.appendChild(header);
+        tarefa.appendChild(info);
+
+        listaTarefas.appendChild(tarefa);
+        nenhumaTarefaMsg.style.display = "none";
+      }
+
+      adicionarTarefa("Comprar mantimentos", "2024-05-01", "Ir ao mercado", "alta", "sim", "2024-04-30");
+    });
+  </script>
 </body>
 </html>
